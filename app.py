@@ -14,12 +14,14 @@ load_dotenv()
 
 class PurewebuiChatbot:
     def __init__(self,
+                 ollama_url=os.getenv('OLLAMA_URL', 'http://localhost:11434/api'),
+                 model=os.getenv('MODEL_NAME', 'deepseek-r1:latest'),
                  memory_file='chat_memory.csv',
                  upload_dir='uploads'):
         self.gemini_api_key = os.getenv("GEMINI_API_KEY")
         if not self.gemini_api_key:
             raise ValueError("GEMINI_API_KEY environment variable not set.")
-        self.model = GenerativeModel('gemini-1.5-pro-latest', api_key=self.gemini_api_key)
+        self.model = GenerativeModel(model, api_key=self.gemini_api_key)
         self.memory_file = memory_file
         self.upload_dir = upload_dir
         
